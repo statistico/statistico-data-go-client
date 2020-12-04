@@ -20,6 +20,14 @@ func (e ErrorInternalServerError) Error() string {
 	return fmt.Sprintf("internal server error returned from external service: %s", e.err.Error())
 }
 
+type ErrorInvalidArgument struct {
+	err error
+}
+
+func (e ErrorInvalidArgument) Error() string {
+	return fmt.Sprintf("invalid argument provided: %s", e.err.Error())
+}
+
 type ErrorNotFound struct {
 	ID uint64
 	err error

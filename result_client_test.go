@@ -70,7 +70,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "rpc error: code = InvalidArgument desc = incorrect format", err.Error())
+		assert.Equal(t, "invalid argument provided: rpc error: code = InvalidArgument desc = incorrect format", err.Error())
 		m.AssertExpectations(t)
 	})
 

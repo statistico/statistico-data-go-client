@@ -47,7 +47,7 @@ func (r resultClient) ByTeam(ctx context.Context, req *statisticodata.TeamResult
 		if e, ok := status.FromError(err); ok {
 			switch e.Code() {
 			case codes.InvalidArgument:
-				return results, err
+				return results, ErrorInvalidArgument{err}
 			case codes.Internal:
 				return results, ErrorInternalServerError{err}
 			default:
