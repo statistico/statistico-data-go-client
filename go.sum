@@ -34,6 +34,8 @@ github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:
 github.com/statistico/statistico-proto v0.0.2 h1:GokKk89vcIm3HLCz6rFdxgMXcIKPSJdNI4hQQ/TtPbc=
 github.com/statistico/statistico-proto/data/go v0.0.0-20201203123432-5f29ad044d53 h1:/KiVxlr8Dk+09l3b+aeHf3AzVdIFO2Jei/DVlrnSups=
 github.com/statistico/statistico-proto/data/go v0.0.0-20201203123432-5f29ad044d53/go.mod h1:QRXaCFpUv/KYxci0GttjdOio5EPwluZ6fM3RgUjl/Ck=
+github.com/statistico/statistico-proto/data/go v0.0.0-20201204165204-b2ff77c2ed7c h1:wpP62EGSBcGTCaJo4a0mkXlImLk6YGbkh+WvrZgPWl0=
+github.com/statistico/statistico-proto/data/go v0.0.0-20201204165204-b2ff77c2ed7c/go.mod h1:QRXaCFpUv/KYxci0GttjdOio5EPwluZ6fM3RgUjl/Ck=
 github.com/stretchr/objx v0.1.0 h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.5.1 h1:nOGnQDM7FYENwehXlg/kFVnos3rEvtKTjRvOWSzb6H4=
@@ -82,6 +84,8 @@ google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 h1:+kGHl1aib/qcwaR
 google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013/go.mod h1:NbSheEEYHJ7i3ixzK3sjbqSGDJWnxyFXZblF3eUsNvo=
 google.golang.org/genproto v0.0.0-20201203001206-6486ece9c497 h1:jDYzwXmX9tLnuG4sL85HPmE1ruErXOopALp2i/0AHnI=
 google.golang.org/genproto v0.0.0-20201203001206-6486ece9c497/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20201204160425-06b3db808446 h1:65ppmIPdaZE+BO34gntwqexoTYr30IRNGmS0OGOHu3A=
+google.golang.org/genproto v0.0.0-20201204160425-06b3db808446/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.23.0/go.mod h1:Y5yQAOtifL1yxbo5wqy6BxZv8vAUGQwXBOALyacEbxg=
 google.golang.org/grpc v1.25.1/go.mod h1:c3i+UQWmh7LiEpx4sFZnkU36qjEYZ0imhYfXVyQciAY=
