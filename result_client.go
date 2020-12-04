@@ -10,7 +10,7 @@ import (
 
 type ResultClient interface {
 	ByID(ctx context.Context, fixtureID uint64) (*statisticoproto.Result, error)
-	ByTeam(ctx context.Context, req *statisticoproto.TeamResultRequest) ([]*statisticoproto.Result, error)
+	ByTeam(ctx context.Context, req *statisticoproto.TeamResultRequest) (<-chan *statisticoproto.Result, <-chan error)
 }
 
 type resultClient struct {
@@ -38,39 +38,58 @@ func (r resultClient) ByID(ctx context.Context, fixtureID uint64) (*statisticopr
 	return result, nil
 }
 
-func (r resultClient) ByTeam(ctx context.Context, req *statisticoproto.TeamResultRequest) ([]*statisticoproto.Result, error) {
-	results := []*statisticoproto.Result{}
+func (r resultClient) ByTeam(ctx context.Context, req *statisticoproto.TeamResultRequest) (<-chan *statisticoproto.Result, <-chan error) {
+	ch := make(chan *statisticoproto.Result, req.GetLimit().Value)
+	errCh := make(chan error)
 
+	go r.streamResults(ctx, req, ch, errCh)
+
+	return ch, errCh
+}
+
+func (r resultClient) streamResults(ctx context.Context, req *statisticoproto.TeamResultRequest, ch chan<- *statisticoproto.Result, errChan chan<- error) {
 	stream, err := r.client.GetResultsForTeam(ctx, req)
 
 	if err != nil {
 		if e, ok := status.FromError(err); ok {
 			switch e.Code() {
 			case codes.InvalidArgument:
-				return results, ErrorInvalidArgument{err}
+				errChan <- ErrorInvalidArgument{err}
+				break
 			case codes.Internal:
-				return results, ErrorInternalServerError{err}
+				errChan <- ErrorInternalServerError{err}
+				break
 			default:
-				return results, ErrorBadGateway{err}
+				errChan <- ErrorBadGateway{err}
+				break
 			}
 		}
+
+		closeChannels(ch, errChan)
+		return
 	}
 
 	for {
 		result, err := stream.Recv()
 
 		if err == io.EOF {
-			break
+			closeChannels(ch, errChan)
+			return
 		}
 
 		if err != nil {
-			return results, ErrorInternalServerError{err}
+			errChan <- ErrorInternalServerError{err}
+			closeChannels(ch, errChan)
+			return
 		}
 
-		results = append(results, result)
+		ch <- result
 	}
+}
 
-	return results, nil
+func closeChannels(ch chan<- *statisticoproto.Result, errChan chan<- error) {
+	close(ch)
+	close(errChan)
 }
 
 func NewResultClient(p statisticoproto.ResultServiceClient) ResultClient {

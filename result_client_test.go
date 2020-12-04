@@ -29,19 +29,27 @@ func TestResultClient_ByTeam(t *testing.T) {
 			Limit:  &wrappers.UInt64Value{Value: 8},
 		}
 
+		res1 := newProtoResult(78102)
+		res2 := newProtoResult(78103)
+
 		ctx := context.Background()
 
 		m.On("GetResultsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
-		stream.On("Recv").Twice().Return(newProtoResult(), nil)
+		stream.On("Recv").Once().Return(res1, nil)
+		stream.On("Recv").Once().Return(res2, nil)
 		stream.On("Recv").Once().Return(&statisticoproto.Result{}, io.EOF)
 
 		results, err := client.ByTeam(ctx, &request)
 
-		if err != nil {
-			t.Fatalf("Expected nil, got %s", err.Error())
+		if len(err) != 0 {
+			t.Fatal("Expected nil, got errors on channel")
 		}
 
-		assert.Equal(t, 2, len(results))
+		one :=<- results
+		two :=<- results
+
+		assert.Equal(t, res1, one)
+		assert.Equal(t, res2, two)
 		m.AssertExpectations(t)
 	})
 
@@ -66,11 +74,13 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		_, err := client.ByTeam(ctx, &request)
 
-		if err == nil {
+		e = <-err
+
+		if e == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "invalid argument provided: rpc error: code = InvalidArgument desc = incorrect format", err.Error())
+		assert.Equal(t, "invalid argument provided: rpc error: code = InvalidArgument desc = incorrect format", e.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -95,11 +105,13 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		_, err := client.ByTeam(ctx, &request)
 
-		if err == nil {
+		e = <-err
+
+		if e == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", err.Error())
+		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", e.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -124,11 +136,13 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		_, err := client.ByTeam(ctx, &request)
 
-		if err == nil {
+		e = <-err
+
+		if e == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", err.Error())
+		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", e.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -150,16 +164,18 @@ func TestResultClient_ByTeam(t *testing.T) {
 		e := errors.New("oh damn")
 
 		m.On("GetResultsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
-		stream.On("Recv").Twice().Return(newProtoResult(), nil)
+		stream.On("Recv").Twice().Return(newProtoResult(17801), nil)
 		stream.On("Recv").Once().Return(&statisticoproto.Result{}, e)
 
 		_, err := client.ByTeam(ctx, &request)
 
-		if err == nil {
+		e = <-err
+
+		if e == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: oh damn", err.Error())
+		assert.Equal(t, "internal server error returned from external service: oh damn", e.Error())
 		m.AssertExpectations(t)
 	})
 }
@@ -178,7 +194,7 @@ func TestResultClient_ByID(t *testing.T) {
 
 		ctx := context.Background()
 
-		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(newProtoResult(), nil)
+		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(newProtoResult(78102), nil)
 
 		result, err := client.ByID(ctx, uint64(78102))
 
@@ -337,7 +353,7 @@ func assertResult(t *testing.T, result *statisticoproto.Result) {
 	a.Equal(date, *result.DateTime)
 }
 
-func newProtoResult() *statisticoproto.Result {
+func newProtoResult(id uint64) *statisticoproto.Result {
 	home := statisticoproto.Team{
 		Id:             1,
 		Name:           "West Ham United",
@@ -390,7 +406,7 @@ func newProtoResult() *statisticoproto.Result {
 	}
 
 	return &statisticoproto.Result{
-		Id:       78102,
+		Id:       id,
 		HomeTeam: &home,
 		AwayTeam: &away,
 		Season:   &season,
