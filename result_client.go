@@ -26,11 +26,11 @@ func (r resultClient) ByID(ctx context.Context, fixtureID uint64) (*statisticoda
 		if e, ok := status.FromError(err); ok {
 			switch e.Code() {
 			case codes.NotFound:
-				return nil, ErrorNotFound
+				return nil, ErrorNotFound{fixtureID, err}
 			case codes.Internal:
-				return nil, ErrorInternalServerError
+				return nil, ErrorInternalServerError{err}
 			default:
-				return nil, ErrorBadGateway
+				return nil, ErrorBadGateway{err}
 			}
 		}
 	}
@@ -49,9 +49,9 @@ func (r resultClient) ByTeam(ctx context.Context, req *statisticodata.TeamResult
 			case codes.InvalidArgument:
 				return results, err
 			case codes.Internal:
-				return results, ErrorInternalServerError
+				return results, ErrorInternalServerError{err}
 			default:
-				return results, ErrorBadGateway
+				return results, ErrorBadGateway{err}
 			}
 		}
 	}
@@ -64,7 +64,7 @@ func (r resultClient) ByTeam(ctx context.Context, req *statisticodata.TeamResult
 		}
 
 		if err != nil {
-			return results, ErrorInternalServerError
+			return results, ErrorInternalServerError{err}
 		}
 
 		results = append(results, result)

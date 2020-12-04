@@ -99,7 +99,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error", err.Error())
+		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", err.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -128,7 +128,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "error response returned from external service", err.Error())
+		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", err.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -159,7 +159,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error", err.Error())
+		assert.Equal(t, "internal server error returned from external service: oh damn", err.Error())
 		m.AssertExpectations(t)
 	})
 }
@@ -214,7 +214,7 @@ func TestResultClient_ByID(t *testing.T) {
 		}
 
 		a := assert.New(t)
-		a.Equal("the resource requested does not exist", err.Error())
+		a.Equal("resource with is '78102' does not exist. Error: rpc error: code = NotFound desc = not found", err.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -241,7 +241,7 @@ func TestResultClient_ByID(t *testing.T) {
 			t.Fatal("Expected error got nil")
 		}
 
-		assert.Equal(t, "internal server error", err.Error())
+		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal server error", err.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -268,7 +268,7 @@ func TestResultClient_ByID(t *testing.T) {
 			t.Fatal("Expected error got nil")
 		}
 
-		assert.Equal(t, "error response returned from external service", err.Error())
+		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = internal server error", err.Error())
 		m.AssertExpectations(t)
 	})
 }
