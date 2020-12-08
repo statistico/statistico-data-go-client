@@ -2,7 +2,7 @@ package statisticodata
 
 import (
 	"context"
-	"github.com/statistico/statistico-proto/data/go"
+	"github.com/statistico/statistico-proto/go"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"io"
