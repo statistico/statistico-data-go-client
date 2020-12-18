@@ -41,15 +41,12 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		results, err := client.ByTeam(ctx, &request)
 
-		if len(err) != 0 {
-			t.Fatal("Expected nil, got errors on channel")
+		if err != nil {
+			t.Fatalf("Expected nil, got %s", err.Error())
 		}
 
-		one :=<- results
-		two :=<- results
-
-		assert.Equal(t, res1, one)
-		assert.Equal(t, res2, two)
+		assert.Equal(t, res1, results[0])
+		assert.Equal(t, res2, results[1])
 		m.AssertExpectations(t)
 	})
 
@@ -74,17 +71,15 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		_, err := client.ByTeam(ctx, &request)
 
-		e = <-err
-
-		if e == nil {
+		if err == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "invalid argument provided: rpc error: code = InvalidArgument desc = incorrect format", e.Error())
+		assert.Equal(t, "invalid argument provided: rpc error: code = InvalidArgument desc = incorrect format", err.Error())
 		m.AssertExpectations(t)
 	})
 
-	t.Run("logs error and returns internal server error", func(t *testing.T) {
+	t.Run("returns internal server error", func(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoResultClient)
@@ -105,17 +100,15 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		_, err := client.ByTeam(ctx, &request)
 
-		e = <-err
-
-		if e == nil {
+		if err == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", e.Error())
+		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", err.Error())
 		m.AssertExpectations(t)
 	})
 
-	t.Run("logs error and returns bad gateway error", func(t *testing.T) {
+	t.Run("returns bad gateway error", func(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoResultClient)
@@ -136,17 +129,15 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		_, err := client.ByTeam(ctx, &request)
 
-		e = <-err
-
-		if e == nil {
+		if err == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", e.Error())
+		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", err.Error())
 		m.AssertExpectations(t)
 	})
 
-	t.Run("logs error and returns internal server error if error parsing stream", func(t *testing.T) {
+	t.Run("returns internal server error if error parsing stream", func(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoResultClient)
@@ -169,13 +160,11 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		_, err := client.ByTeam(ctx, &request)
 
-		e = <-err
-
-		if e == nil {
+		if err == nil {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: oh damn", e.Error())
+		assert.Equal(t, "internal server error returned from external service: oh damn", err.Error())
 		m.AssertExpectations(t)
 	})
 }
