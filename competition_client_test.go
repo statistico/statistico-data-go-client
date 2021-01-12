@@ -3,7 +3,7 @@ package statisticodata_test
 import (
 	"context"
 	"errors"
-	"github.com/statistico/statistico-data-go-grpc-client/statisticodata"
+	"github.com/statistico/statistico-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
