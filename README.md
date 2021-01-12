@@ -23,7 +23,7 @@ import (
 func main() {
     conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 
-    teamClient := statisticoproto.TeamServiceClient(conn)
+    teamClient := statisticoproto.NewTeamServiceClient(conn)
 
     client := statisticodata.NewTeamClient(teamClient)
     
