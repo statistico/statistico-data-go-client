@@ -1,0 +1,78 @@
+package statisticodata
+
+import (
+	"context"
+	"github.com/statistico/statistico-proto/go"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"io"
+)
+
+type TeamClient interface {
+	ByID(ctx context.Context, teamID uint64) (*statisticoproto.Team, error)
+	BySeasonID(ctx context.Context, seasonId uint64) ([]*statisticoproto.Team, error)
+}
+
+type teamClient struct {
+	client statisticoproto.TeamServiceClient
+}
+
+func (t *teamClient) ByID(ctx context.Context, teamID uint64) (*statisticoproto.Team, error) {
+	req := statisticoproto.TeamRequest{TeamId: teamID}
+
+	team, err := t.client.GetTeamByID(ctx, &req)
+
+	if err != nil {
+		if e, ok := status.FromError(err); ok {
+			switch e.Code() {
+			case codes.NotFound:
+				return nil, ErrorNotFound{ID: teamID, err: err}
+			default:
+				return nil, ErrorBadGateway{err}
+			}
+		}
+
+		return nil, ErrorInternalServerError{err}
+	}
+
+	return team, nil
+}
+
+func (t *teamClient) BySeasonID(ctx context.Context, seasonId uint64) ([]*statisticoproto.Team, error) {
+	teams := []*statisticoproto.Team{}
+
+	req := statisticoproto.SeasonTeamsRequest{SeasonId: seasonId}
+
+	stream, err := t.client.GetTeamsBySeasonId(ctx, &req)
+
+	if err != nil {
+		if e, ok := status.FromError(err); ok {
+			switch e.Code() {
+			case codes.Internal:
+				return teams, ErrorInternalServerError{err}
+			default:
+				return teams, ErrorBadGateway{err}
+			}
+		}
+	}
+
+	for {
+		team, err := stream.Recv()
+
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			return teams, ErrorInternalServerError{err}
+		}
+
+		teams = append(teams, team)
+	}
+
+	return teams, nil
+}
+
+func NewTeamClient(p statisticoproto.TeamServiceClient) TeamClient {
+	return &teamClient{client: p}
+}

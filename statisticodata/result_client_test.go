@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/golang/protobuf/ptypes/wrappers"
-	"github.com/statistico/statistico-data-go-grpc-client"
+	"github.com/statistico/statistico-data-go-grpc-client/statisticodata"
 	"github.com/statistico/statistico-proto/go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -219,7 +219,7 @@ func TestResultClient_ByID(t *testing.T) {
 		}
 
 		a := assert.New(t)
-		a.Equal("resource with is '78102' does not exist. Error: rpc error: code = NotFound desc = not found", err.Error())
+		a.Equal("resource with ID '78102' does not exist. Error: rpc error: code = NotFound desc = not found", err.Error())
 		m.AssertExpectations(t)
 	})
 

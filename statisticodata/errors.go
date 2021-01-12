@@ -34,5 +34,5 @@ type ErrorNotFound struct {
 }
 
 func (e ErrorNotFound) Error() string {
-	return fmt.Sprintf("resource with is '%d' does not exist. Error: %s",e.ID, e.err.Error())
+	return fmt.Sprintf("resource with ID '%d' does not exist. Error: %s",e.ID, e.err.Error())
 }
