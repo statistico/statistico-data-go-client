@@ -1,6 +1,6 @@
 # Statistico Data Go Client
 
-[![CircleCI](https://circleci.com/gh/statistico/statistico-data-go-grpc-client/tree/main.svg?style=shield)](https://circleci.com/gh/statistico/statistico-data-go-grpc-client/tree/master)
+[![CircleCI](https://circleci.com/gh/statistico/statistico-data-go-grpc-client/tree/main.svg?style=shield)](https://circleci.com/gh/statistico/statistico-data-go-grpc-client/tree/main)
 
 The library is a Golang wrapper around the [Statistico Data gRPC API](https://github.com/statistico/statistico-data).
 
