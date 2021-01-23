@@ -24,7 +24,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		stream := new(MockResultStream)
 
-		request := statisticoproto.TeamResultRequest{
+		request := statistico.TeamResultRequest{
 			TeamId: 1,
 			Limit:  &wrappers.UInt64Value{Value: 8},
 		}
@@ -37,7 +37,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 		m.On("GetResultsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Once().Return(res1, nil)
 		stream.On("Recv").Once().Return(res2, nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Result{}, io.EOF)
+		stream.On("Recv").Once().Return(&statistico.Result{}, io.EOF)
 
 		results, err := client.ByTeam(ctx, &request)
 
@@ -58,7 +58,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		stream := new(MockResultStream)
 
-		request := statisticoproto.TeamResultRequest{
+		request := statistico.TeamResultRequest{
 			TeamId: 1,
 			Limit:  &wrappers.UInt64Value{Value: 8},
 		}
@@ -87,7 +87,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		stream := new(MockResultStream)
 
-		request := statisticoproto.TeamResultRequest{
+		request := statistico.TeamResultRequest{
 			TeamId: 1,
 			Limit:  &wrappers.UInt64Value{Value: 8},
 		}
@@ -116,7 +116,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		stream := new(MockResultStream)
 
-		request := statisticoproto.TeamResultRequest{
+		request := statistico.TeamResultRequest{
 			TeamId: 1,
 			Limit:  &wrappers.UInt64Value{Value: 8},
 		}
@@ -145,7 +145,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		stream := new(MockResultStream)
 
-		request := statisticoproto.TeamResultRequest{
+		request := statistico.TeamResultRequest{
 			TeamId: 1,
 			Limit:  &wrappers.UInt64Value{Value: 8},
 		}
@@ -156,7 +156,7 @@ func TestResultClient_ByTeam(t *testing.T) {
 
 		m.On("GetResultsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Twice().Return(newProtoResult(17801), nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Result{}, e)
+		stream.On("Recv").Once().Return(&statistico.Result{}, e)
 
 		_, err := client.ByTeam(ctx, &request)
 
@@ -176,7 +176,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statisticoproto.ResultRequest) bool {
+		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -201,7 +201,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statisticoproto.ResultRequest) bool {
+		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -210,7 +210,7 @@ func TestResultClient_ByID(t *testing.T) {
 
 		e := status.Error(codes.NotFound, "not found")
 
-		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(&statisticoproto.Result{}, e)
+		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(&statistico.Result{}, e)
 
 		_, err := client.ByID(ctx, uint64(78102))
 
@@ -229,7 +229,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statisticoproto.ResultRequest) bool {
+		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -238,7 +238,7 @@ func TestResultClient_ByID(t *testing.T) {
 
 		e := status.Error(codes.Internal, "internal server error")
 
-		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(&statisticoproto.Result{}, e)
+		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(&statistico.Result{}, e)
 
 		_, err := client.ByID(ctx, uint64(78102))
 
@@ -256,7 +256,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statisticoproto.ResultRequest) bool {
+		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -265,7 +265,7 @@ func TestResultClient_ByID(t *testing.T) {
 
 		e := status.Error(codes.Aborted, "internal server error")
 
-		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(&statisticoproto.Result{}, e)
+		m.On("GetById", ctx, req, []grpc.CallOption(nil)).Return(&statistico.Result{}, e)
 
 		_, err := client.ByID(ctx, uint64(78102))
 
@@ -278,10 +278,10 @@ func TestResultClient_ByID(t *testing.T) {
 	})
 }
 
-func assertResult(t *testing.T, result *statisticoproto.Result) {
+func assertResult(t *testing.T, result *statistico.Result) {
 	a := assert.New(t)
 
-	home := statisticoproto.Team{
+	home := statistico.Team{
 		Id:             1,
 		Name:           "West Ham United",
 		ShortCode:      &wrappers.StringValue{Value: "WHU"},
@@ -292,7 +292,7 @@ func assertResult(t *testing.T, result *statisticoproto.Result) {
 		Logo:           &wrappers.StringValue{Value: "logo"},
 	}
 
-	away := statisticoproto.Team{
+	away := statistico.Team{
 		Id:             10,
 		Name:           "Nottingham Forest",
 		ShortCode:      &wrappers.StringValue{Value: "NOT"},
@@ -303,13 +303,13 @@ func assertResult(t *testing.T, result *statisticoproto.Result) {
 		Logo:           &wrappers.StringValue{Value: "logo"},
 	}
 
-	season := statisticoproto.Season{
+	season := statistico.Season{
 		Id:        16036,
 		Name:      "2019/2020",
 		IsCurrent: &wrappers.BoolValue{Value: true},
 	}
 
-	round := statisticoproto.Round{
+	round := statistico.Round{
 		Id:        38,
 		Name:      "38",
 		SeasonId:  16036,
@@ -317,17 +317,17 @@ func assertResult(t *testing.T, result *statisticoproto.Result) {
 		EndDate:   "2020-07-23T23:59:59+00:00",
 	}
 
-	venue := statisticoproto.Venue{
+	venue := statistico.Venue{
 		Id:   214,
 		Name: "London Stadium",
 	}
 
-	date := statisticoproto.Date{
+	date := statistico.Date{
 		Utc: 1594132077,
 		Rfc: "2020-07-07T15:00:00+00:00",
 	}
 
-	stats := statisticoproto.MatchStats{
+	stats := statistico.MatchStats{
 		HomeScore: &wrappers.UInt32Value{Value: 5},
 		AwayScore: &wrappers.UInt32Value{Value: 2},
 	}
@@ -342,8 +342,8 @@ func assertResult(t *testing.T, result *statisticoproto.Result) {
 	a.Equal(date, *result.DateTime)
 }
 
-func newProtoResult(id uint64) *statisticoproto.Result {
-	home := statisticoproto.Team{
+func newProtoResult(id uint64) *statistico.Result {
+	home := statistico.Team{
 		Id:             1,
 		Name:           "West Ham United",
 		ShortCode:      &wrappers.StringValue{Value: "WHU"},
@@ -354,7 +354,7 @@ func newProtoResult(id uint64) *statisticoproto.Result {
 		Logo:           &wrappers.StringValue{Value: "logo"},
 	}
 
-	away := statisticoproto.Team{
+	away := statistico.Team{
 		Id:             10,
 		Name:           "Nottingham Forest",
 		ShortCode:      &wrappers.StringValue{Value: "NOT"},
@@ -365,13 +365,13 @@ func newProtoResult(id uint64) *statisticoproto.Result {
 		Logo:           &wrappers.StringValue{Value: "logo"},
 	}
 
-	season := statisticoproto.Season{
+	season := statistico.Season{
 		Id:        16036,
 		Name:      "2019/2020",
 		IsCurrent: &wrappers.BoolValue{Value: true},
 	}
 
-	round := statisticoproto.Round{
+	round := statistico.Round{
 		Id:        38,
 		Name:      "38",
 		SeasonId:  16036,
@@ -379,22 +379,22 @@ func newProtoResult(id uint64) *statisticoproto.Result {
 		EndDate:   "2020-07-23T23:59:59+00:00",
 	}
 
-	venue := statisticoproto.Venue{
+	venue := statistico.Venue{
 		Id:   214,
 		Name: "London Stadium",
 	}
 
-	date := statisticoproto.Date{
+	date := statistico.Date{
 		Utc: 1594132077,
 		Rfc: "2020-07-07T15:00:00+00:00",
 	}
 
-	stats := statisticoproto.MatchStats{
+	stats := statistico.MatchStats{
 		HomeScore: &wrappers.UInt32Value{Value: 5},
 		AwayScore: &wrappers.UInt32Value{Value: 2},
 	}
 
-	return &statisticoproto.Result{
+	return &statistico.Result{
 		Id:       id,
 		HomeTeam: &home,
 		AwayTeam: &away,
@@ -410,24 +410,24 @@ type MockProtoResultClient struct {
 	mock.Mock
 }
 
-func (m *MockProtoResultClient) GetResultsForTeam(ctx context.Context, in *statisticoproto.TeamResultRequest, opts ...grpc.CallOption) (statisticoproto.ResultService_GetResultsForTeamClient, error) {
+func (m *MockProtoResultClient) GetResultsForTeam(ctx context.Context, in *statistico.TeamResultRequest, opts ...grpc.CallOption) (statistico.ResultService_GetResultsForTeamClient, error) {
 	args := m.Called(ctx, in, opts)
-	return args.Get(0).(statisticoproto.ResultService_GetResultsForTeamClient), args.Error(1)
+	return args.Get(0).(statistico.ResultService_GetResultsForTeamClient), args.Error(1)
 }
 
-func (m *MockProtoResultClient) GetById(ctx context.Context, in *statisticoproto.ResultRequest, opts ...grpc.CallOption) (*statisticoproto.Result, error) {
+func (m *MockProtoResultClient) GetById(ctx context.Context, in *statistico.ResultRequest, opts ...grpc.CallOption) (*statistico.Result, error) {
 	args := m.Called(ctx, in, opts)
-	return args.Get(0).(*statisticoproto.Result), args.Error(1)
+	return args.Get(0).(*statistico.Result), args.Error(1)
 }
 
-func (m *MockProtoResultClient) GetResultsForSeason(ctx context.Context, in *statisticoproto.SeasonRequest, opts ...grpc.CallOption) (statisticoproto.ResultService_GetResultsForSeasonClient, error) {
+func (m *MockProtoResultClient) GetResultsForSeason(ctx context.Context, in *statistico.SeasonRequest, opts ...grpc.CallOption) (statistico.ResultService_GetResultsForSeasonClient, error) {
 	args := m.Called(ctx, in ,opts)
-	return args.Get(0).(statisticoproto.ResultService_GetResultsForSeasonClient), args.Error(1)
+	return args.Get(0).(statistico.ResultService_GetResultsForSeasonClient), args.Error(1)
 }
 
-func (m *MockProtoResultClient) GetHistoricalResultsForFixture(ctx context.Context, in *statisticoproto.HistoricalResultRequest, opts ...grpc.CallOption) (statisticoproto.ResultService_GetHistoricalResultsForFixtureClient, error) {
+func (m *MockProtoResultClient) GetHistoricalResultsForFixture(ctx context.Context, in *statistico.HistoricalResultRequest, opts ...grpc.CallOption) (statistico.ResultService_GetHistoricalResultsForFixtureClient, error) {
 	args := m.Called(ctx, in ,opts)
-	return args.Get(0).(statisticoproto.ResultService_GetResultsForSeasonClient), args.Error(1)
+	return args.Get(0).(statistico.ResultService_GetResultsForSeasonClient), args.Error(1)
 }
 
 type MockResultStream struct {
@@ -435,7 +435,7 @@ type MockResultStream struct {
 	grpc.ClientStream
 }
 
-func (r *MockResultStream) Recv() (*statisticoproto.Result, error) {
+func (r *MockResultStream) Recv() (*statistico.Result, error) {
 	args := r.Called()
-	return args.Get(0).(*statisticoproto.Result), args.Error(1)
+	return args.Get(0).(*statistico.Result), args.Error(1)
 }

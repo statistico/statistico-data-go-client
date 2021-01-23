@@ -9,16 +9,16 @@ import (
 )
 
 type ResultClient interface {
-	ByID(ctx context.Context, fixtureID uint64) (*statisticoproto.Result, error)
-	ByTeam(ctx context.Context, req *statisticoproto.TeamResultRequest) ([]*statisticoproto.Result, error)
+	ByID(ctx context.Context, fixtureID uint64) (*statistico.Result, error)
+	ByTeam(ctx context.Context, req *statistico.TeamResultRequest) ([]*statistico.Result, error)
 }
 
 type resultClient struct {
-	client statisticoproto.ResultServiceClient
+	client statistico.ResultServiceClient
 }
 
-func (r resultClient) ByID(ctx context.Context, fixtureID uint64) (*statisticoproto.Result, error) {
-	request := statisticoproto.ResultRequest{FixtureId: fixtureID}
+func (r resultClient) ByID(ctx context.Context, fixtureID uint64) (*statistico.Result, error) {
+	request := statistico.ResultRequest{FixtureId: fixtureID}
 
 	result, err := r.client.GetById(ctx, &request)
 
@@ -38,8 +38,8 @@ func (r resultClient) ByID(ctx context.Context, fixtureID uint64) (*statisticopr
 	return result, nil
 }
 
-func (r resultClient) ByTeam(ctx context.Context, req *statisticoproto.TeamResultRequest) ([]*statisticoproto.Result, error) {
-	res := []*statisticoproto.Result{}
+func (r resultClient) ByTeam(ctx context.Context, req *statistico.TeamResultRequest) ([]*statistico.Result, error) {
+	res := []*statistico.Result{}
 
 	stream, err := r.client.GetResultsForTeam(ctx, req)
 
@@ -73,6 +73,6 @@ func (r resultClient) ByTeam(ctx context.Context, req *statisticoproto.TeamResul
 	}
 }
 
-func NewResultClient(p statisticoproto.ResultServiceClient) ResultClient {
+func NewResultClient(p statistico.ResultServiceClient) ResultClient {
 	return resultClient{client: p}
 }

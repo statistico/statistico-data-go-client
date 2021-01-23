@@ -23,7 +23,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 
 		stream := new(MockCompetitionStream)
 
-		request := statisticoproto.CompetitionRequest{
+		request := statistico.CompetitionRequest{
 			CountryIds: []uint64{462},
 			Sort:       nil,
 			IsCup:      nil,
@@ -33,7 +33,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 
 		m.On("ListCompetitions", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Twice().Return(newProtoCompetition(), nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Competition{}, io.EOF)
+		stream.On("Recv").Once().Return(&statistico.Competition{}, io.EOF)
 
 		competitions, err := client.ByCountryID(ctx, 462)
 
@@ -54,7 +54,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 
 		stream := new(MockCompetitionStream)
 
-		request := statisticoproto.CompetitionRequest{
+		request := statistico.CompetitionRequest{
 			CountryIds: []uint64{462},
 			Sort:       nil,
 			IsCup:      nil,
@@ -85,7 +85,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 
 		stream := new(MockCompetitionStream)
 
-		request := statisticoproto.CompetitionRequest{
+		request := statistico.CompetitionRequest{
 			CountryIds: []uint64{462},
 			Sort:       nil,
 			IsCup:      nil,
@@ -116,7 +116,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 
 		stream := new(MockCompetitionStream)
 
-		request := statisticoproto.CompetitionRequest{
+		request := statistico.CompetitionRequest{
 			CountryIds: []uint64{462},
 			Sort:       nil,
 			IsCup:      nil,
@@ -128,7 +128,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 
 		m.On("ListCompetitions", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Twice().Return(newProtoCompetition(), nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Competition{}, e)
+		stream.On("Recv").Once().Return(&statistico.Competition{}, e)
 
 		_, err := client.ByCountryID(ctx, 462)
 
@@ -142,8 +142,8 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 	})
 }
 
-func newProtoCompetition() *statisticoproto.Competition {
-	return &statisticoproto.Competition{
+func newProtoCompetition() *statistico.Competition {
+	return &statistico.Competition{
 		Id:        8,
 		Name:      "Premier League",
 		IsCup:     false,
@@ -155,9 +155,9 @@ type MockProtoCompetitionClient struct {
 	mock.Mock
 }
 
-func (c *MockProtoCompetitionClient) ListCompetitions(ctx context.Context, in *statisticoproto.CompetitionRequest, opts ...grpc.CallOption) (statisticoproto.CompetitionService_ListCompetitionsClient, error) {
+func (c *MockProtoCompetitionClient) ListCompetitions(ctx context.Context, in *statistico.CompetitionRequest, opts ...grpc.CallOption) (statistico.CompetitionService_ListCompetitionsClient, error) {
 	args := c.Called(ctx, in, opts)
-	return args.Get(0).(statisticoproto.CompetitionService_ListCompetitionsClient), args.Error(1)
+	return args.Get(0).(statistico.CompetitionService_ListCompetitionsClient), args.Error(1)
 }
 
 type MockCompetitionStream struct {
@@ -165,7 +165,7 @@ type MockCompetitionStream struct {
 	grpc.ClientStream
 }
 
-func (c *MockCompetitionStream) Recv() (*statisticoproto.Competition, error) {
+func (c *MockCompetitionStream) Recv() (*statistico.Competition, error) {
 	args := c.Called()
-	return args.Get(0).(*statisticoproto.Competition), args.Error(1)
+	return args.Get(0).(*statistico.Competition), args.Error(1)
 }

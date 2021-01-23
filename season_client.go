@@ -10,18 +10,18 @@ import (
 )
 
 type SeasonClient interface {
-	ByTeamID(ctx context.Context, teamId uint64, sort string) ([]*statisticoproto.Season, error)
-	ByCompetitionID(ctx context.Context, competitionId uint64, sort string) ([]*statisticoproto.Season, error)
+	ByTeamID(ctx context.Context, teamId uint64, sort string) ([]*statistico.Season, error)
+	ByCompetitionID(ctx context.Context, competitionId uint64, sort string) ([]*statistico.Season, error)
 }
 
 type seasonClient struct {
-	client statisticoproto.SeasonServiceClient
+	client statistico.SeasonServiceClient
 }
 
-func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string) ([]*statisticoproto.Season, error) {
-	seasons := []*statisticoproto.Season{}
+func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string) ([]*statistico.Season, error) {
+	seasons := []*statistico.Season{}
 
-	req := statisticoproto.TeamSeasonsRequest{
+	req := statistico.TeamSeasonsRequest{
 		TeamId: teamId,
 		Sort:   &wrappers.StringValue{Value: sort},
 	}
@@ -56,10 +56,10 @@ func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string)
 	return seasons, nil
 }
 
-func (s *seasonClient) ByCompetitionID(ctx context.Context, competitionId uint64, sort string) ([]*statisticoproto.Season, error) {
-	seasons := []*statisticoproto.Season{}
+func (s *seasonClient) ByCompetitionID(ctx context.Context, competitionId uint64, sort string) ([]*statistico.Season, error) {
+	seasons := []*statistico.Season{}
 
-	req := statisticoproto.SeasonCompetitionRequest{CompetitionId: competitionId, Sort: &wrappers.StringValue{Value: sort}}
+	req := statistico.SeasonCompetitionRequest{CompetitionId: competitionId, Sort: &wrappers.StringValue{Value: sort}}
 
 	stream, err := s.client.GetSeasonsForCompetition(ctx, &req)
 
@@ -91,6 +91,6 @@ func (s *seasonClient) ByCompetitionID(ctx context.Context, competitionId uint64
 	return seasons, nil
 }
 
-func NewSeasonClient(c statisticoproto.SeasonServiceClient) SeasonClient {
+func NewSeasonClient(c statistico.SeasonServiceClient) SeasonClient {
 	return &seasonClient{client: c}
 }

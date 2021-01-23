@@ -9,15 +9,15 @@ import (
 )
 
 type TeamStatClient interface {
-	Stats(ctx context.Context, req *statisticoproto.TeamStatRequest) ([]*statisticoproto.TeamStat, error)
+	Stats(ctx context.Context, req *statistico.TeamStatRequest) ([]*statistico.TeamStat, error)
 }
 
 type teamStatClient struct {
-	client statisticoproto.TeamStatsServiceClient
+	client statistico.TeamStatsServiceClient
 }
 
-func (t *teamStatClient) Stats(ctx context.Context, req *statisticoproto.TeamStatRequest) ([]*statisticoproto.TeamStat, error) {
-	stats := []*statisticoproto.TeamStat{}
+func (t *teamStatClient) Stats(ctx context.Context, req *statistico.TeamStatRequest) ([]*statistico.TeamStat, error) {
+	stats := []*statistico.TeamStat{}
 
 	stream, err := t.client.GetStatForTeam(ctx, req)
 
@@ -51,6 +51,6 @@ func (t *teamStatClient) Stats(ctx context.Context, req *statisticoproto.TeamSta
 	}
 }
 
-func NewTeamStatClient(p statisticoproto.TeamStatsServiceClient) TeamStatClient {
+func NewTeamStatClient(p statistico.TeamStatsServiceClient) TeamStatClient {
 	return &teamStatClient{client: p}
 }
