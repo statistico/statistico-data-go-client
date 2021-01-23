@@ -278,8 +278,6 @@ func TestResultClient_ByID(t *testing.T) {
 }
 
 func assertResult(t *testing.T, result *statistico.Result) {
-	a := assert.New(t)
-
 	home := statistico.Team{
 		Id:             1,
 		Name:           "West Ham United",
