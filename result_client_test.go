@@ -218,8 +218,7 @@ func TestResultClient_ByID(t *testing.T) {
 			t.Fatal("Expected error got nil")
 		}
 
-		a := assert.New(t)
-		a.Equal("resource with ID '78102' does not exist. Error: rpc error: code = NotFound desc = not found", err.Error())
+		assert.Equal(t, "resource with ID '78102' does not exist. Error: rpc error: code = NotFound desc = not found", err.Error())
 		m.AssertExpectations(t)
 	})
 
@@ -332,14 +331,14 @@ func assertResult(t *testing.T, result *statistico.Result) {
 		AwayScore: &wrappers.UInt32Value{Value: 2},
 	}
 
-	a.Equal(uint64(78102), result.Id)
-	a.Equal(home, *result.HomeTeam)
-	a.Equal(away, *result.AwayTeam)
-	a.Equal(season, *result.Season)
-	a.Equal(round, *result.Round)
-	a.Equal(venue, *result.Venue)
-	a.Equal(stats, *result.Stats)
-	a.Equal(date, *result.DateTime)
+	assert.Equal(t, uint64(78102), result.Id)
+	assert.Equal(t, home, *result.HomeTeam)
+	assert.Equal(t, away, *result.AwayTeam)
+	assert.Equal(t, season, *result.Season)
+	assert.Equal(t, round, *result.Round)
+	assert.Equal(t, venue, *result.Venue)
+	assert.Equal(t, stats, *result.Stats)
+	assert.Equal(t, date, *result.DateTime)
 }
 
 func newProtoResult(id uint64) *statistico.Result {
