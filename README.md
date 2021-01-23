@@ -34,6 +34,6 @@ func main() {
         return
     }
 
-    // Do something with team variable
+    // Handle team variable
 }
 ```
