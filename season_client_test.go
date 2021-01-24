@@ -24,7 +24,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.TeamSeasonsRequest{
+		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -33,7 +33,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Twice().Return(newProtoSeason(), nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Season{}, io.EOF)
+		stream.On("Recv").Once().Return(&statistico.Season{}, io.EOF)
 
 		seasons, err := client.ByTeamID(ctx, 55, "name_desc")
 
@@ -54,7 +54,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.TeamSeasonsRequest{
+		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -84,7 +84,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.TeamSeasonsRequest{
+		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -114,7 +114,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.TeamSeasonsRequest{
+		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -125,7 +125,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Twice().Return(newProtoSeason(), nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Season{}, e)
+		stream.On("Recv").Once().Return(&statistico.Season{}, e)
 
 		_, err := client.ByTeamID(ctx, 55, "name_desc")
 
@@ -148,7 +148,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.SeasonCompetitionRequest{
+		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -157,7 +157,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		s.On("GetSeasonsForCompetition", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Twice().Return(newProtoSeason(), nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Season{}, io.EOF)
+		stream.On("Recv").Once().Return(&statistico.Season{}, io.EOF)
 
 		seasons, err := client.ByCompetitionID(ctx, 55, "name_desc")
 
@@ -178,7 +178,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.SeasonCompetitionRequest{
+		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -208,7 +208,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.SeasonCompetitionRequest{
+		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -238,7 +238,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		stream := new(MockSeasonStream)
 
-		request := statisticoproto.SeasonCompetitionRequest{
+		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
@@ -249,7 +249,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		s.On("GetSeasonsForCompetition", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Twice().Return(newProtoSeason(), nil)
-		stream.On("Recv").Once().Return(&statisticoproto.Season{}, e)
+		stream.On("Recv").Once().Return(&statistico.Season{}, e)
 
 		_, err := client.ByCompetitionID(ctx, 55, "name_desc")
 
@@ -263,22 +263,22 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 	})
 }
 
-func newProtoSeason() *statisticoproto.Season {
-	return &statisticoproto.Season{}
+func newProtoSeason() *statistico.Season {
+	return &statistico.Season{}
 }
 
 type MockProtoSeasonClient struct {
 	mock.Mock
 }
 
-func (s *MockProtoSeasonClient) GetSeasonsForCompetition(ctx context.Context, in *statisticoproto.SeasonCompetitionRequest, opts ...grpc.CallOption) (statisticoproto.SeasonService_GetSeasonsForCompetitionClient, error) {
+func (s *MockProtoSeasonClient) GetSeasonsForCompetition(ctx context.Context, in *statistico.SeasonCompetitionRequest, opts ...grpc.CallOption) (statistico.SeasonService_GetSeasonsForCompetitionClient, error) {
 	args := s.Called(ctx, in, opts)
-	return args.Get(0).(statisticoproto.SeasonService_GetSeasonsForCompetitionClient), args.Error(1)
+	return args.Get(0).(statistico.SeasonService_GetSeasonsForCompetitionClient), args.Error(1)
 }
 
-func (s *MockProtoSeasonClient) GetSeasonsForTeam(ctx context.Context, in *statisticoproto.TeamSeasonsRequest, opts ...grpc.CallOption) (statisticoproto.SeasonService_GetSeasonsForTeamClient, error) {
+func (s *MockProtoSeasonClient) GetSeasonsForTeam(ctx context.Context, in *statistico.TeamSeasonsRequest, opts ...grpc.CallOption) (statistico.SeasonService_GetSeasonsForTeamClient, error) {
 	args := s.Called(ctx, in, opts)
-	return args.Get(0).(statisticoproto.SeasonService_GetSeasonsForTeamClient), args.Error(1)
+	return args.Get(0).(statistico.SeasonService_GetSeasonsForTeamClient), args.Error(1)
 }
 
 type MockSeasonStream struct {
@@ -286,7 +286,7 @@ type MockSeasonStream struct {
 	grpc.ClientStream
 }
 
-func (s *MockSeasonStream) Recv() (*statisticoproto.Season, error) {
+func (s *MockSeasonStream) Recv() (*statistico.Season, error) {
 	args := s.Called()
-	return args.Get(0).(*statisticoproto.Season), args.Error(1)
+	return args.Get(0).(*statistico.Season), args.Error(1)
 }

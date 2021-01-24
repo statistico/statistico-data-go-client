@@ -9,16 +9,16 @@ import (
 )
 
 type TeamClient interface {
-	ByID(ctx context.Context, teamID uint64) (*statisticoproto.Team, error)
-	BySeasonID(ctx context.Context, seasonId uint64) ([]*statisticoproto.Team, error)
+	ByID(ctx context.Context, teamID uint64) (*statistico.Team, error)
+	BySeasonID(ctx context.Context, seasonId uint64) ([]*statistico.Team, error)
 }
 
 type teamClient struct {
-	client statisticoproto.TeamServiceClient
+	client statistico.TeamServiceClient
 }
 
-func (t *teamClient) ByID(ctx context.Context, teamID uint64) (*statisticoproto.Team, error) {
-	req := statisticoproto.TeamRequest{TeamId: teamID}
+func (t *teamClient) ByID(ctx context.Context, teamID uint64) (*statistico.Team, error) {
+	req := statistico.TeamRequest{TeamId: teamID}
 
 	team, err := t.client.GetTeamByID(ctx, &req)
 
@@ -38,10 +38,10 @@ func (t *teamClient) ByID(ctx context.Context, teamID uint64) (*statisticoproto.
 	return team, nil
 }
 
-func (t *teamClient) BySeasonID(ctx context.Context, seasonId uint64) ([]*statisticoproto.Team, error) {
-	teams := []*statisticoproto.Team{}
+func (t *teamClient) BySeasonID(ctx context.Context, seasonId uint64) ([]*statistico.Team, error) {
+	teams := []*statistico.Team{}
 
-	req := statisticoproto.SeasonTeamsRequest{SeasonId: seasonId}
+	req := statistico.SeasonTeamsRequest{SeasonId: seasonId}
 
 	stream, err := t.client.GetTeamsBySeasonId(ctx, &req)
 
@@ -73,6 +73,6 @@ func (t *teamClient) BySeasonID(ctx context.Context, seasonId uint64) ([]*statis
 	return teams, nil
 }
 
-func NewTeamClient(p statisticoproto.TeamServiceClient) TeamClient {
+func NewTeamClient(p statistico.TeamServiceClient) TeamClient {
 	return &teamClient{client: p}
 }

@@ -23,7 +23,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 
 		stream := new(MockTeamStatStream)
 
-		request := statisticoproto.TeamStatRequest{
+		request := statistico.TeamStatRequest{
 			Stat:      "shots_total",
 			TeamId:    5,
 			SeasonIds: []uint64{16036},
@@ -37,7 +37,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 		m.On("GetStatForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
 		stream.On("Recv").Once().Return(statOne, nil)
 		stream.On("Recv").Once().Return(statTwo, nil)
-		stream.On("Recv").Once().Return(&statisticoproto.TeamStat{}, io.EOF)
+		stream.On("Recv").Once().Return(&statistico.TeamStat{}, io.EOF)
 
 		stats, err := client.Stats(ctx, &request)
 
@@ -58,7 +58,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 
 		stream := new(MockTeamStatStream)
 
-		request := statisticoproto.TeamStatRequest{
+		request := statistico.TeamStatRequest{
 			Stat:      "shots_total",
 			TeamId:    5,
 			SeasonIds: []uint64{16036},
@@ -88,7 +88,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 
 		stream := new(MockTeamStatStream)
 
-		request := statisticoproto.TeamStatRequest{
+		request := statistico.TeamStatRequest{
 			Stat:      "shots_total",
 			TeamId:    5,
 			SeasonIds: []uint64{16036},
@@ -118,7 +118,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 
 		stream := new(MockTeamStatStream)
 
-		request := statisticoproto.TeamStatRequest{
+		request := statistico.TeamStatRequest{
 			Stat:      "shots_total",
 			TeamId:    5,
 			SeasonIds: []uint64{16036},
@@ -148,7 +148,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 
 		stream := new(MockTeamStatStream)
 
-		request := statisticoproto.TeamStatRequest{
+		request := statistico.TeamStatRequest{
 			Stat:      "shots_total",
 			TeamId:    5,
 			SeasonIds: []uint64{16036},
@@ -159,7 +159,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 		e := errors.New("oh damn")
 
 		m.On("GetStatForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
-		stream.On("Recv").Once().Return(&statisticoproto.TeamStat{}, e)
+		stream.On("Recv").Once().Return(&statistico.TeamStat{}, e)
 
 		_, err := client.Stats(ctx, &request)
 
@@ -172,22 +172,22 @@ func TestTeamStatClient_Stats(t *testing.T) {
 	})
 }
 
-func newProtoTeamStat(fixtureID uint64) *statisticoproto.TeamStat {
-	return &statisticoproto.TeamStat{FixtureId: fixtureID, Stat: "shots_total"}
+func newProtoTeamStat(fixtureID uint64) *statistico.TeamStat {
+	return &statistico.TeamStat{FixtureId: fixtureID, Stat: "shots_total"}
 }
 
 type MockProtoTeamStatsClient struct {
 	mock.Mock
 }
 
-func (m *MockProtoTeamStatsClient) GetTeamStatsForFixture(ctx context.Context, in *statisticoproto.FixtureRequest, opts ...grpc.CallOption) (*statisticoproto.TeamStatsResponse, error) {
+func (m *MockProtoTeamStatsClient) GetTeamStatsForFixture(ctx context.Context, in *statistico.FixtureRequest, opts ...grpc.CallOption) (*statistico.TeamStatsResponse, error) {
 	args := m.Called(ctx, in, opts)
-	return args.Get(0).(*statisticoproto.TeamStatsResponse), args.Error(1)
+	return args.Get(0).(*statistico.TeamStatsResponse), args.Error(1)
 }
 
-func (m *MockProtoTeamStatsClient) GetStatForTeam(ctx context.Context, in *statisticoproto.TeamStatRequest, opts ...grpc.CallOption) (statisticoproto.TeamStatsService_GetStatForTeamClient, error) {
+func (m *MockProtoTeamStatsClient) GetStatForTeam(ctx context.Context, in *statistico.TeamStatRequest, opts ...grpc.CallOption) (statistico.TeamStatsService_GetStatForTeamClient, error) {
 	args := m.Called(ctx, in, opts)
-	return args.Get(0).(statisticoproto.TeamStatsService_GetStatForTeamClient), args.Error(1)
+	return args.Get(0).(statistico.TeamStatsService_GetStatForTeamClient), args.Error(1)
 }
 
 type MockTeamStatStream struct {
@@ -195,7 +195,7 @@ type MockTeamStatStream struct {
 	grpc.ClientStream
 }
 
-func (m *MockTeamStatStream) Recv() (*statisticoproto.TeamStat, error) {
+func (m *MockTeamStatStream) Recv() (*statistico.TeamStat, error) {
 	args := m.Called()
-	return args.Get(0).(*statisticoproto.TeamStat), args.Error(1)
+	return args.Get(0).(*statistico.TeamStat), args.Error(1)
 }

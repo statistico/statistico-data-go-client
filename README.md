@@ -23,7 +23,7 @@ import (
 func main() {
     conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 
-    teamClient := statisticoproto.NewTeamServiceClient(conn)
+    teamClient := statistico.NewTeamServiceClient(conn)
 
     client := statisticodata.NewTeamClient(teamClient)
     
@@ -34,6 +34,6 @@ func main() {
         return
     }
 
-    // Do something with team variable
+    // Handle team variable
 }
 ```

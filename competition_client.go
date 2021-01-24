@@ -9,17 +9,17 @@ import (
 )
 
 type CompetitionClient interface {
-	ByCountryID(ctx context.Context, countryId uint64) ([]*statisticoproto.Competition, error)
+	ByCountryID(ctx context.Context, countryId uint64) ([]*statistico.Competition, error)
 }
 
 type competitionClient struct {
-	competitionClient statisticoproto.CompetitionServiceClient
+	competitionClient statistico.CompetitionServiceClient
 }
 
-func (c *competitionClient) ByCountryID(ctx context.Context, countryId uint64) ([]*statisticoproto.Competition, error) {
-	competitions := []*statisticoproto.Competition{}
+func (c *competitionClient) ByCountryID(ctx context.Context, countryId uint64) ([]*statistico.Competition, error) {
+	competitions := []*statistico.Competition{}
 
-	req := statisticoproto.CompetitionRequest{CountryIds: []uint64{countryId}}
+	req := statistico.CompetitionRequest{CountryIds: []uint64{countryId}}
 
 	stream, err := c.competitionClient.ListCompetitions(ctx, &req)
 
@@ -51,6 +51,6 @@ func (c *competitionClient) ByCountryID(ctx context.Context, countryId uint64) (
 	return competitions, nil
 }
 
-func NewCompetitionClient(c statisticoproto.CompetitionServiceClient) CompetitionClient {
+func NewCompetitionClient(c statistico.CompetitionServiceClient) CompetitionClient {
 	return &competitionClient{competitionClient: c}
 }
