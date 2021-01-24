@@ -330,13 +330,13 @@ func assertResult(t *testing.T, result *statistico.Result) {
 	}
 
 	assert.Equal(t, uint64(78102), result.Id)
-	assert.Equal(t, home, *result.HomeTeam)
-	assert.Equal(t, away, *result.AwayTeam)
-	assert.Equal(t, season, *result.Season)
-	assert.Equal(t, round, *result.Round)
-	assert.Equal(t, venue, *result.Venue)
-	assert.Equal(t, stats, *result.Stats)
-	assert.Equal(t, date, *result.DateTime)
+	assert.Equal(t, &home, result.GetHomeTeam())
+	assert.Equal(t, &away, result.GetAwayTeam())
+	assert.Equal(t, &season, result.GetSeason())
+	assert.Equal(t, &round, result.GetRound())
+	assert.Equal(t, &venue, result.GetVenue())
+	assert.Equal(t, &stats, result.GetStats())
+	assert.Equal(t, &date, result.GetDateTime())
 }
 
 func newProtoResult(id uint64) *statistico.Result {

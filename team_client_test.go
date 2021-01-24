@@ -81,14 +81,14 @@ func TestTeamClient_ByID(t *testing.T) {
 			t.Fatalf("Expected nil, got %s", err.Error())
 		}
 
-		assert.Equal(t, uint64(1), team.Id)
-		assert.Equal(t, "West Ham United", team.Name)
-		assert.Nil(t, team.ShortCode)
-		assert.Equal(t, uint64(8), team.CountryId)
-		assert.Equal(t, uint64(214), team.VenueId)
+		assert.Equal(t, uint64(1), team.GetId())
+		assert.Equal(t, "West Ham United", team.GetName())
+		assert.Nil(t, team.GetShortCode())
+		assert.Equal(t, uint64(8), team.GetCountryId())
+		assert.Equal(t, uint64(214), team.GetVenueId())
 		assert.Equal(t, false, team.IsNationalTeam.GetValue())
-		assert.Nil(t, team.Founded)
-		assert.Nil(t, team.Logo)
+		assert.Nil(t, team.GetFounded())
+		assert.Nil(t, team.GetLogo())
 		m.AssertExpectations(t)
 	})
 
