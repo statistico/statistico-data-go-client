@@ -9,7 +9,7 @@ type ErrorBadGateway struct {
 }
 
 func (e ErrorBadGateway) Error() string {
-	return fmt.Sprintf("error connecting to external service: %s", e.err.Error())
+	return fmt.Sprintf("error connecting to the data service: %s", e.err.Error())
 }
 
 type ErrorExternalServer struct {

@@ -136,7 +136,7 @@ func TestTeamClient_ByID(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Aborted desc = aborted", err.Error())
 	})
 
 	t.Run("returns an internal error", func(t *testing.T) {
@@ -247,7 +247,7 @@ func TestTeamClient_BySeasonID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Unavailable desc = service unavailable", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Unavailable desc = service unavailable", err.Error())
 		m.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})

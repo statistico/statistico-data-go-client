@@ -112,7 +112,7 @@ func TestFixtureClient_Search(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Aborted desc = aborted", err.Error())
 		pc.AssertExpectations(t)
 	})
 

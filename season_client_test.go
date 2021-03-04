@@ -101,7 +101,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Unavailable desc = service unavailable", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Unavailable desc = service unavailable", err.Error())
 		s.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})
@@ -225,7 +225,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Unavailable desc = service unavailable", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Unavailable desc = service unavailable", err.Error())
 		s.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})

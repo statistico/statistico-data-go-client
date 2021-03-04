@@ -103,7 +103,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Unavailable desc = service unavailable", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Unavailable desc = service unavailable", err.Error())
 		m.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})

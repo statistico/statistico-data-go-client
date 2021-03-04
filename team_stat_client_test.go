@@ -136,7 +136,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Aborted desc = aborted", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Aborted desc = aborted", err.Error())
 		m.AssertExpectations(t)
 	})
 
