@@ -32,7 +32,7 @@ func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string)
 		if e, ok := status.FromError(err); ok {
 			switch e.Code() {
 			case codes.Internal:
-				return seasons, ErrorInternalServerError{err}
+				return seasons, ErrorExternalServer{err}
 			default:
 				return seasons, ErrorBadGateway{err}
 			}
@@ -47,7 +47,7 @@ func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string)
 		}
 
 		if err != nil {
-			return seasons, ErrorInternalServerError{err}
+			return seasons, ErrorExternalServer{err}
 		}
 
 		seasons = append(seasons, season)
@@ -67,7 +67,7 @@ func (s *seasonClient) ByCompetitionID(ctx context.Context, competitionId uint64
 		if e, ok := status.FromError(err); ok {
 			switch e.Code() {
 			case codes.Internal:
-				return seasons, ErrorInternalServerError{err}
+				return seasons, ErrorExternalServer{err}
 			default:
 				return seasons, ErrorBadGateway{err}
 			}
@@ -82,7 +82,7 @@ func (s *seasonClient) ByCompetitionID(ctx context.Context, competitionId uint64
 		}
 
 		if err != nil {
-			return seasons, ErrorInternalServerError{err}
+			return seasons, ErrorExternalServer{err}
 		}
 
 		seasons = append(seasons, season)

@@ -27,7 +27,7 @@ func (t *teamStatClient) Stats(ctx context.Context, req *statistico.TeamStatRequ
 			case codes.InvalidArgument:
 				return nil, ErrorInvalidArgument{err}
 			case codes.Internal:
-				return nil, ErrorInternalServerError{err}
+				return nil, ErrorExternalServer{err}
 			default:
 				return nil, ErrorBadGateway{err}
 			}
@@ -44,7 +44,7 @@ func (t *teamStatClient) Stats(ctx context.Context, req *statistico.TeamStatRequ
 		}
 
 		if err != nil {
-			return stats, ErrorInternalServerError{err}
+			return stats, ErrorExternalServer{err}
 		}
 
 		stats = append(stats, st)

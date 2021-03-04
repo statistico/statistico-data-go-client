@@ -9,15 +9,15 @@ type ErrorBadGateway struct {
 }
 
 func (e ErrorBadGateway) Error() string {
-	return fmt.Sprintf("error connecting to external service: %s", e.err.Error())
+	return fmt.Sprintf("error connecting to the data service: %s", e.err.Error())
 }
 
-type ErrorInternalServerError struct {
+type ErrorExternalServer struct {
 	err error
 }
 
-func (e ErrorInternalServerError) Error() string {
-	return fmt.Sprintf("internal server error returned from external service: %s", e.err.Error())
+func (e ErrorExternalServer) Error() string {
+	return fmt.Sprintf("internal server error returned from the data service: %s", e.err.Error())
 }
 
 type ErrorInvalidArgument struct {

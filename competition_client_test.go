@@ -72,7 +72,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: rpc error: code = Internal desc = internal error", err.Error())
 		m.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})
@@ -103,7 +103,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "error connecting to external service: rpc error: code = Unavailable desc = service unavailable", err.Error())
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Unavailable desc = service unavailable", err.Error())
 		m.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})
@@ -136,7 +136,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: oh damn", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: oh damn", err.Error())
 		m.AssertExpectations(t)
 		stream.AssertExpectations(t)
 	})
