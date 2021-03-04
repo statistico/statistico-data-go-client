@@ -27,7 +27,7 @@ func (f *fixtureClient) Search(ctx context.Context, req *statistico.FixtureSearc
 			case codes.InvalidArgument:
 				return fixtures, ErrorInvalidArgument{err}
 			case codes.Internal:
-				return fixtures, ErrorInternalServerError{err}
+				return fixtures, ErrorExternalServer{err}
 			default:
 				return fixtures, ErrorBadGateway{err}
 			}
@@ -44,7 +44,7 @@ func (f *fixtureClient) Search(ctx context.Context, req *statistico.FixtureSearc
 		}
 
 		if err != nil {
-			return fixtures, ErrorInternalServerError{err: err}
+			return fixtures, ErrorExternalServer{err: err}
 		}
 
 		fixtures = append(fixtures, fixture)

@@ -27,7 +27,7 @@ func (c *competitionClient) ByCountryID(ctx context.Context, countryId uint64) (
 		if e, ok := status.FromError(err); ok {
 			switch e.Code() {
 			case codes.Internal:
-				return competitions, ErrorInternalServerError{err}
+				return competitions, ErrorExternalServer{err}
 			default:
 				return competitions, ErrorBadGateway{err}
 			}
@@ -42,7 +42,7 @@ func (c *competitionClient) ByCountryID(ctx context.Context, countryId uint64) (
 		}
 
 		if err != nil {
-			return competitions, ErrorInternalServerError{err}
+			return competitions, ErrorExternalServer{err}
 		}
 
 		competitions = append(competitions, competition)

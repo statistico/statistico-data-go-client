@@ -28,7 +28,7 @@ func (r resultClient) ByID(ctx context.Context, fixtureID uint64) (*statistico.R
 			case codes.NotFound:
 				return nil, ErrorNotFound{fixtureID, err}
 			case codes.Internal:
-				return nil, ErrorInternalServerError{err}
+				return nil, ErrorExternalServer{err}
 			default:
 				return nil, ErrorBadGateway{err}
 			}
@@ -49,7 +49,7 @@ func (r resultClient) ByTeam(ctx context.Context, req *statistico.TeamResultRequ
 			case codes.InvalidArgument:
 				return res, ErrorInvalidArgument{err}
 			case codes.Internal:
-				return res, ErrorInternalServerError{err}
+				return res, ErrorExternalServer{err}
 			default:
 				return res, ErrorBadGateway{err}
 			}
@@ -66,7 +66,7 @@ func (r resultClient) ByTeam(ctx context.Context, req *statistico.TeamResultRequ
 		}
 
 		if err != nil {
-			return res, ErrorInternalServerError{err}
+			return res, ErrorExternalServer{err}
 		}
 
 		res = append(res, result)

@@ -32,7 +32,7 @@ func (t *teamClient) ByID(ctx context.Context, teamID uint64) (*statistico.Team,
 			}
 		}
 
-		return nil, ErrorInternalServerError{err}
+		return nil, err
 	}
 
 	return team, nil
@@ -49,11 +49,13 @@ func (t *teamClient) BySeasonID(ctx context.Context, seasonId uint64) ([]*statis
 		if e, ok := status.FromError(err); ok {
 			switch e.Code() {
 			case codes.Internal:
-				return teams, ErrorInternalServerError{err}
+				return teams, ErrorExternalServer{err}
 			default:
 				return teams, ErrorBadGateway{err}
 			}
 		}
+
+		return nil, err
 	}
 
 	for {
@@ -64,7 +66,7 @@ func (t *teamClient) BySeasonID(ctx context.Context, seasonId uint64) ([]*statis
 		}
 
 		if err != nil {
-			return teams, ErrorInternalServerError{err}
+			return teams, ErrorExternalServer{err}
 		}
 
 		teams = append(teams, team)

@@ -87,7 +87,7 @@ func TestFixtureClient_Search(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = incorrect format", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: rpc error: code = Internal desc = incorrect format", err.Error())
 		pc.AssertExpectations(t)
 	})
 
@@ -140,7 +140,7 @@ func TestFixtureClient_Search(t *testing.T) {
 			t.Fatal("Expected errors, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: oh damn", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: oh damn", err.Error())
 		pc.AssertExpectations(t)
 	})
 }

@@ -71,7 +71,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: rpc error: code = Internal desc = internal error", err.Error())
 		s.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})
@@ -133,7 +133,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: oh damn", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: oh damn", err.Error())
 		s.AssertExpectations(t)
 		stream.AssertExpectations(t)
 	})
@@ -195,7 +195,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: rpc error: code = Internal desc = internal error", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: rpc error: code = Internal desc = internal error", err.Error())
 		s.AssertExpectations(t)
 		stream.AssertNotCalled(t, "Recv")
 	})
@@ -257,7 +257,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 			t.Fatal("Expected error, got nil")
 		}
 
-		assert.Equal(t, "internal server error returned from external service: oh damn", err.Error())
+		assert.Equal(t, "internal server error returned from the data service: oh damn", err.Error())
 		s.AssertExpectations(t)
 		stream.AssertExpectations(t)
 	})
