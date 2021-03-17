@@ -10,10 +10,32 @@ import (
 
 type FixtureClient interface {
 	Search(ctx context.Context, req *statistico.FixtureSearchRequest) ([]*statistico.Fixture, error)
+	ByID(ctx context.Context, fixtureID uint64) (*statistico.Fixture, error)
 }
 
 type fixtureClient struct {
 	client statistico.FixtureServiceClient
+}
+
+func (f *fixtureClient) ByID(ctx context.Context, fixtureID uint64) (*statistico.Fixture, error) {
+	request := statistico.FixtureRequest{FixtureId: fixtureID}
+
+	fixture, err := f.client.FixtureByID(ctx, &request)
+
+	if err != nil {
+		if e, ok := status.FromError(err); ok {
+			switch e.Code() {
+			case codes.NotFound:
+				return nil, ErrorNotFound{fixtureID, err}
+			case codes.Internal:
+				return nil, ErrorExternalServer{err}
+			default:
+				return nil, ErrorBadGateway{err}
+			}
+		}
+	}
+
+	return fixture, nil
 }
 
 func (f *fixtureClient) Search(ctx context.Context, req *statistico.FixtureSearchRequest) ([]*statistico.Fixture, error) {

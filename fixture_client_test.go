@@ -145,6 +145,118 @@ func TestFixtureClient_Search(t *testing.T) {
 	})
 }
 
+func TestFixtureClient_ByID(t *testing.T) {
+	t.Run("returns a fixture struct", func(t *testing.T) {
+		t.Helper()
+
+		m := new(MockFixtureProtoClient)
+		client := statisticodata.NewFixtureClient(m)
+
+		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+			assert.Equal(t, uint64(78102), r.FixtureId)
+			return true
+		})
+
+		ctx := context.Background()
+
+		m.On("FixtureByID", ctx, req, []grpc.CallOption(nil)).Return(newProtoFixture(78102), nil)
+
+		fixture, err := client.ByID(ctx, uint64(78102))
+
+		if err != nil {
+			t.Fatalf("Expected nil, got %s", err.Error())
+		}
+
+		m.AssertExpectations(t)
+		assert.Equal(t, int64(78102), fixture.Id)
+	})
+
+	t.Run("returns not found error if returned by client", func(t *testing.T) {
+		t.Helper()
+
+		m := new(MockFixtureProtoClient)
+		client := statisticodata.NewFixtureClient(m)
+
+		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+			assert.Equal(t, uint64(78102), r.FixtureId)
+			return true
+		})
+
+		ctx := context.Background()
+
+		e := status.Error(codes.NotFound, "not found")
+
+		m.On("FixtureByID", ctx, req, []grpc.CallOption(nil)).Return(&statistico.Fixture{}, e)
+
+		_, err := client.ByID(ctx, uint64(78102))
+
+		if err == nil {
+			t.Fatal("Expected error got nil")
+		}
+
+		assert.Equal(t, "resource with ID '78102' does not exist. Error: rpc error: code = NotFound desc = not found", err.Error())
+		m.AssertExpectations(t)
+	})
+
+	t.Run("logs error and returns internal server error if returned by client", func(t *testing.T) {
+		t.Helper()
+
+		m := new(MockFixtureProtoClient)
+		client := statisticodata.NewFixtureClient(m)
+
+		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+			assert.Equal(t, uint64(78102), r.FixtureId)
+			return true
+		})
+
+		ctx := context.Background()
+
+		e := status.Error(codes.Internal, "internal server error")
+
+		m.On("FixtureByID", ctx, req, []grpc.CallOption(nil)).Return(&statistico.Fixture{}, e)
+
+		_, err := client.ByID(ctx, uint64(78102))
+
+		if err == nil {
+			t.Fatal("Expected error got nil")
+		}
+
+		assert.Equal(t, "internal server error returned from the data service: rpc error: code = Internal desc = internal server error", err.Error())
+		m.AssertExpectations(t)
+	})
+
+	t.Run("logs error and returns bad gateway error", func(t *testing.T) {
+		t.Helper()
+
+		m := new(MockFixtureProtoClient)
+		client := statisticodata.NewFixtureClient(m)
+
+		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+			assert.Equal(t, uint64(78102), r.FixtureId)
+			return true
+		})
+
+		ctx := context.Background()
+
+		e := status.Error(codes.Aborted, "internal server error")
+
+		m.On("FixtureByID", ctx, req, []grpc.CallOption(nil)).Return(&statistico.Fixture{}, e)
+
+		_, err := client.ByID(ctx, uint64(78102))
+
+		if err == nil {
+			t.Fatal("Expected error got nil")
+		}
+
+		assert.Equal(t, "error connecting to the data service: rpc error: code = Aborted desc = internal server error", err.Error())
+		m.AssertExpectations(t)
+	})
+}
+
+func newProtoFixture(id int64) *statistico.Fixture {
+	return &statistico.Fixture{Id: id}
+}
+
 type MockFixtureStream struct {
 	mock.Mock
 	grpc.ClientStream
