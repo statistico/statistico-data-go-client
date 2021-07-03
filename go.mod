@@ -1,10 +1,11 @@
-module github.com/statistico/statistico-data-go-grpc-client
+module github.com/statistico/statistico-football-data-go-grpc-client
 
 go 1.13
 
 require (
 	github.com/golang/protobuf v1.4.3
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.1.0 // indirect
+	github.com/statistico/statistico-proto v0.0.3-0.20210422195817-59a711222ee6 // indirect
 	github.com/statistico/statistico-proto/go v0.0.0-20210123162423-c8b53fd7dc60
 	github.com/stretchr/testify v1.5.1
 	golang.org/x/net v0.0.0-20210119194325-5f4716e94777 // indirect

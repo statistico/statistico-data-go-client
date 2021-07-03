@@ -121,6 +121,8 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
+github.com/statistico/statistico-proto v0.0.3-0.20210422195817-59a711222ee6 h1:7DAtG4cQa15UfOUrKh/Utwh+vpIRoTBeouyUdCMihew=
+github.com/statistico/statistico-proto v0.0.3-0.20210422195817-59a711222ee6/go.mod h1:IegjDKIHD0rxW6y2a++xCNNqIGSTxmncB6AempSO6pk=
 github.com/statistico/statistico-proto/go v0.0.0-20201208131122-fb700994645a h1:T3FCmugJXsPhupu+EFZPnMJcIdllwl9YZC9U1qI0+Qo=
 github.com/statistico/statistico-proto/go v0.0.0-20201208131122-fb700994645a/go.mod h1:vPyOUzi8uJfwh6QGj2RFFsgLTG2YehvpiN/ziVWEHV0=
 github.com/statistico/statistico-proto/go v0.0.0-20210123162423-c8b53fd7dc60 h1:Q28sJGlu/68jL1Uq5ecu+1Uw5EXpb8PG2H1lqNp5TBI=

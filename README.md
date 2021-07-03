@@ -1,12 +1,12 @@
-# Statistico Data Go Client
+# Statistico Football Data Go Client
 
-[![CircleCI](https://circleci.com/gh/statistico/statistico-data-go-grpc-client/tree/main.svg?style=shield)](https://circleci.com/gh/statistico/statistico-data-go-grpc-client/tree/main)
+[![CircleCI](https://circleci.com/gh/statistico/statistico-football-data-go-grpc-client/tree/main.svg?style=shield)](https://circleci.com/gh/statistico/statistico-football-data-go-grpc-client/tree/main)
 
-The library is a Golang wrapper around the [Statistico Data gRPC API](https://github.com/statistico/statistico-data).
+The library is a Golang wrapper around the [Statistico Football Data gRPC API](https://github.com/statistico/statistico-football-data).
 
 ## Installation
 ```.env
-$ go get -u github.com/statistico/statistico-data-go-grpc-client
+$ go get -u github.com/statistico/statistico-football-data-go-grpc-client
 ```
 ## Usage
 ```go
@@ -15,7 +15,7 @@ package main
 import (
     "context"
     "fmt"
-    "github.com/statistico/statistico-data-go-grpc-client/statisticodata"
+    "github.com/statistico/statistico-football-data-go-grpc-client/statisticodata"
     "github.com/statistico/statistico-proto/go"
     "google.golang.org/grpc"
 )
