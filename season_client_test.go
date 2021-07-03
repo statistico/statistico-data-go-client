@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/golang/protobuf/ptypes/wrappers"
-	"github.com/statistico/statistico-data-go-grpc-client"
+	"github.com/statistico/statistico-football-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

@@ -6,7 +6,7 @@ The library is a Golang wrapper around the [Statistico Data gRPC API](https://gi
 
 ## Installation
 ```.env
-$ go get -u github.com/statistico/statistico-data-go-grpc-client
+$ go get -u github.com/statistico/statistico-football-data-go-grpc-client
 ```
 ## Usage
 ```go
@@ -15,7 +15,7 @@ package main
 import (
     "context"
     "fmt"
-    "github.com/statistico/statistico-data-go-grpc-client/statisticodata"
+    "github.com/statistico/statistico-football-data-go-grpc-client/statisticodata"
     "github.com/statistico/statistico-proto/go"
     "google.golang.org/grpc"
 )
