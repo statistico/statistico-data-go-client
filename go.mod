@@ -1,4 +1,4 @@
-module github.com/statistico/statistico-data-go-grpc-client
+module github.com/statistico/statistico-football-data-go-grpc-client
 
 go 1.13
 
