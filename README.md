@@ -1,4 +1,4 @@
-# Statistico Data Go Client
+# Statistico Football Data Go Client
 
 [![CircleCI](https://circleci.com/gh/statistico/statistico-football-data-go-grpc-client/tree/main.svg?style=shield)](https://circleci.com/gh/statistico/statistico-football-data-go-grpc-client/tree/main)
 
