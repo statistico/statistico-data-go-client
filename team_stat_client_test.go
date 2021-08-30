@@ -19,7 +19,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamStatsClient)
-		client :=statisticodata.NewTeamStatClient(m)
+		client := statisticodata.NewTeamStatClient(m)
 
 		stream := new(MockTeamStatStream)
 
@@ -54,7 +54,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamStatsClient)
-		client :=statisticodata.NewTeamStatClient(m)
+		client := statisticodata.NewTeamStatClient(m)
 
 		stream := new(MockTeamStatStream)
 
@@ -84,7 +84,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamStatsClient)
-		client :=statisticodata.NewTeamStatClient(m)
+		client := statisticodata.NewTeamStatClient(m)
 
 		stream := new(MockTeamStatStream)
 
@@ -114,7 +114,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamStatsClient)
-		client :=statisticodata.NewTeamStatClient(m)
+		client := statisticodata.NewTeamStatClient(m)
 
 		stream := new(MockTeamStatStream)
 
@@ -144,7 +144,7 @@ func TestTeamStatClient_Stats(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamStatsClient)
-		client :=statisticodata.NewTeamStatClient(m)
+		client := statisticodata.NewTeamStatClient(m)
 
 		stream := new(MockTeamStatStream)
 

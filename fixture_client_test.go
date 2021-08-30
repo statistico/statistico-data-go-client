@@ -152,7 +152,7 @@ func TestFixtureClient_ByID(t *testing.T) {
 		m := new(MockFixtureProtoClient)
 		client := statisticodata.NewFixtureClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.FixtureRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -177,7 +177,7 @@ func TestFixtureClient_ByID(t *testing.T) {
 		m := new(MockFixtureProtoClient)
 		client := statisticodata.NewFixtureClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.FixtureRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -204,7 +204,7 @@ func TestFixtureClient_ByID(t *testing.T) {
 		m := new(MockFixtureProtoClient)
 		client := statisticodata.NewFixtureClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.FixtureRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -231,7 +231,7 @@ func TestFixtureClient_ByID(t *testing.T) {
 		m := new(MockFixtureProtoClient)
 		client := statisticodata.NewFixtureClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.FixtureRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.FixtureRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})

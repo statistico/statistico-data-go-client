@@ -26,7 +26,7 @@ func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string)
 		Sort:   &wrappers.StringValue{Value: sort},
 	}
 
-	stream, err := s.client.GetSeasonsForTeam(ctx, &req)
+	response, err := s.client.GetSeasonsForTeam(ctx, &req)
 
 	if err != nil {
 		if e, ok := status.FromError(err); ok {
@@ -39,21 +39,7 @@ func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string)
 		}
 	}
 
-	for {
-		season, err := stream.Recv()
-
-		if err == io.EOF {
-			break
-		}
-
-		if err != nil {
-			return seasons, ErrorExternalServer{err}
-		}
-
-		seasons = append(seasons, season)
-	}
-
-	return seasons, nil
+	return response.Seasons, nil
 }
 
 func (s *seasonClient) ByCompetitionID(ctx context.Context, competitionId uint64, sort string) ([]*statistico.Season, error) {
