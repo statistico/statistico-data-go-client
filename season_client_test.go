@@ -29,11 +29,14 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
 		}
 
+		response := statistico.TeamSeasonsResponse{Seasons: []*statistico.Season{
+			newProtoSeason(),
+			newProtoSeason(),
+		}}
+
 		ctx := context.Background()
 
-		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
-		stream.On("Recv").Twice().Return(newProtoSeason(), nil)
-		stream.On("Recv").Once().Return(&statistico.Season{}, io.EOF)
+		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(&response, nil)
 
 		seasons, err := client.ByTeamID(ctx, 55, "name_desc")
 
@@ -52,8 +55,6 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 		s := new(MockProtoSeasonClient)
 		client := statisticodata.NewSeasonClient(s)
 
-		stream := new(MockSeasonStream)
-
 		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
 			Sort:   &wrappers.StringValue{Value: "name_desc"},
@@ -63,7 +64,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		e := status.Error(codes.Internal, "internal error")
 
-		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, e)
+		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(&statistico.TeamSeasonsResponse{}, e)
 
 		_, err := client.ByTeamID(ctx, 55, "name_desc")
 
@@ -73,7 +74,6 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		assert.Equal(t, "internal server error returned from the data service: rpc error: code = Internal desc = internal error", err.Error())
 		s.AssertExpectations(t)
-		stream.AssertNotCalled(t, "Recv")
 	})
 
 	t.Run("logs error and returns bad gateway error for non internal server error returned by client", func(t *testing.T) {
@@ -81,8 +81,6 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		s := new(MockProtoSeasonClient)
 		client := statisticodata.NewSeasonClient(s)
-
-		stream := new(MockSeasonStream)
 
 		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
@@ -93,7 +91,7 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		e := status.Error(codes.Unavailable, "service unavailable")
 
-		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, e)
+		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(&statistico.TeamSeasonsResponse{}, e)
 
 		_, err := client.ByTeamID(ctx, 55, "name_desc")
 
@@ -103,39 +101,6 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 
 		assert.Equal(t, "error connecting to the data service: rpc error: code = Unavailable desc = service unavailable", err.Error())
 		s.AssertExpectations(t)
-		stream.AssertNotCalled(t, "Recv")
-	})
-
-	t.Run("logs error and returns internal server error if error reading from stream", func(t *testing.T) {
-		t.Helper()
-
-		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
-
-		stream := new(MockSeasonStream)
-
-		request := statistico.TeamSeasonsRequest{
-			TeamId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
-		}
-
-		ctx := context.Background()
-
-		e := errors.New("oh damn")
-
-		s.On("GetSeasonsForTeam", ctx, &request, []grpc.CallOption(nil)).Return(stream, nil)
-		stream.On("Recv").Twice().Return(newProtoSeason(), nil)
-		stream.On("Recv").Once().Return(&statistico.Season{}, e)
-
-		_, err := client.ByTeamID(ctx, 55, "name_desc")
-
-		if err == nil {
-			t.Fatal("Expected error, got nil")
-		}
-
-		assert.Equal(t, "internal server error returned from the data service: oh damn", err.Error())
-		s.AssertExpectations(t)
-		stream.AssertExpectations(t)
 	})
 }
 
@@ -150,7 +115,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrappers.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -180,7 +145,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrappers.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -210,7 +175,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrappers.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -240,7 +205,7 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrappers.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -276,9 +241,9 @@ func (s *MockProtoSeasonClient) GetSeasonsForCompetition(ctx context.Context, in
 	return args.Get(0).(statistico.SeasonService_GetSeasonsForCompetitionClient), args.Error(1)
 }
 
-func (s *MockProtoSeasonClient) GetSeasonsForTeam(ctx context.Context, in *statistico.TeamSeasonsRequest, opts ...grpc.CallOption) (statistico.SeasonService_GetSeasonsForTeamClient, error) {
+func (s *MockProtoSeasonClient) GetSeasonsForTeam(ctx context.Context, in *statistico.TeamSeasonsRequest, opts ...grpc.CallOption) (*statistico.TeamSeasonsResponse, error) {
 	args := s.Called(ctx, in, opts)
-	return args.Get(0).(statistico.SeasonService_GetSeasonsForTeamClient), args.Error(1)
+	return args.Get(0).(*statistico.TeamSeasonsResponse), args.Error(1)
 }
 
 type MockSeasonStream struct {

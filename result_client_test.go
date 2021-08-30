@@ -176,7 +176,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -201,7 +201,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -228,7 +228,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -255,7 +255,7 @@ func TestResultClient_ByID(t *testing.T) {
 		m := new(MockProtoResultClient)
 		client := statisticodata.NewResultClient(m)
 
-		req := mock.MatchedBy(func (r *statistico.ResultRequest) bool {
+		req := mock.MatchedBy(func(r *statistico.ResultRequest) bool {
 			assert.Equal(t, uint64(78102), r.FixtureId)
 			return true
 		})
@@ -418,12 +418,12 @@ func (m *MockProtoResultClient) GetById(ctx context.Context, in *statistico.Resu
 }
 
 func (m *MockProtoResultClient) GetResultsForSeason(ctx context.Context, in *statistico.SeasonRequest, opts ...grpc.CallOption) (statistico.ResultService_GetResultsForSeasonClient, error) {
-	args := m.Called(ctx, in ,opts)
+	args := m.Called(ctx, in, opts)
 	return args.Get(0).(statistico.ResultService_GetResultsForSeasonClient), args.Error(1)
 }
 
 func (m *MockProtoResultClient) GetHistoricalResultsForFixture(ctx context.Context, in *statistico.HistoricalResultRequest, opts ...grpc.CallOption) (statistico.ResultService_GetHistoricalResultsForFixtureClient, error) {
-	args := m.Called(ctx, in ,opts)
+	args := m.Called(ctx, in, opts)
 	return args.Get(0).(statistico.ResultService_GetResultsForSeasonClient), args.Error(1)
 }
 

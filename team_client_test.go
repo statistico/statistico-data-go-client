@@ -303,6 +303,11 @@ func (t *MockProtoTeamClient) GetTeamsBySeasonId(ctx context.Context, in *statis
 	return args.Get(0).(statistico.TeamService_GetTeamsBySeasonIdClient), args.Error(1)
 }
 
+func (t *MockProtoTeamClient) GetTeamsByCompetitionId(ctx context.Context, in *statistico.CompetitionTeamsRequest, opts ...grpc.CallOption) (*statistico.TeamsResponse, error) {
+	args := t.Called(ctx, in, opts)
+	return args.Get(0).(*statistico.TeamsResponse), args.Error(1)
+}
+
 type MockTeamStream struct {
 	mock.Mock
 	grpc.ClientStream
