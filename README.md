@@ -15,7 +15,7 @@ package main
 import (
     "context"
     "fmt"
-    "github.com/statistico/statistico-football-data-go-grpc-client/statisticodata"
+    "github.com/statistico/statistico-football-data-go-grpc-client/statisticofootballdata"
     "github.com/statistico/statistico-proto/go"
     "google.golang.org/grpc"
 )
@@ -25,7 +25,7 @@ func main() {
 
     teamClient := statistico.NewTeamServiceClient(conn)
 
-    client := statisticodata.NewTeamClient(teamClient)
+    client := statisticofootballdata.NewTeamClient(teamClient)
     
     team, err := client.ByID(context.Background(), 10) 
 

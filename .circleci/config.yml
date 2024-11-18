@@ -1,8 +1,13 @@
-version: 2
+version: 2.1
+
+executors:
+  go-executor:
+    docker:
+      - image: cimg/go:1.23.3
+
 jobs:
   build:
-    docker:
-      - image: circleci/golang:1.17
+    executor: go-executor
     steps:
       - checkout
       - run:

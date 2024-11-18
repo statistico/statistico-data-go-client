@@ -1,9 +1,8 @@
-package statisticodata_test
+package statisticofootballdata_test
 
 import (
 	"context"
 	"errors"
-	"github.com/golang/protobuf/ptypes/wrappers"
 	"github.com/statistico/statistico-football-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
 	"github.com/stretchr/testify/assert"
@@ -11,6 +10,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/wrapperspb"
 	"io"
 	"testing"
 )
@@ -20,19 +20,19 @@ func TestTeamClient_ByID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		request := statistico.TeamRequest{TeamId: 1}
 
 		response := statistico.Team{
 			Id:             1,
 			Name:           "West Ham United",
-			ShortCode:      &wrappers.StringValue{Value: "WHU"},
+			ShortCode:      &wrapperspb.StringValue{Value: "WHU"},
 			CountryId:      8,
 			VenueId:        214,
-			IsNationalTeam: &wrappers.BoolValue{Value: false},
-			Founded:        &wrappers.UInt64Value{Value: 1895},
-			Logo:           &wrappers.StringValue{Value: "logo"},
+			IsNationalTeam: &wrapperspb.BoolValue{Value: false},
+			Founded:        &wrapperspb.UInt64Value{Value: 1895},
+			Logo:           &wrapperspb.StringValue{Value: "logo"},
 		}
 
 		ctx := context.Background()
@@ -60,7 +60,7 @@ func TestTeamClient_ByID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		request := statistico.TeamRequest{TeamId: 1}
 
@@ -96,7 +96,7 @@ func TestTeamClient_ByID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		request := statistico.TeamRequest{TeamId: 1}
 
@@ -120,7 +120,7 @@ func TestTeamClient_ByID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		request := statistico.TeamRequest{TeamId: 1}
 
@@ -143,7 +143,7 @@ func TestTeamClient_ByID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		request := statistico.TeamRequest{TeamId: 1}
 
@@ -168,7 +168,7 @@ func TestTeamClient_BySeasonID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		stream := new(MockTeamStream)
 
@@ -202,7 +202,7 @@ func TestTeamClient_BySeasonID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		stream := new(MockTeamStream)
 
@@ -229,7 +229,7 @@ func TestTeamClient_BySeasonID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		stream := new(MockTeamStream)
 
@@ -256,7 +256,7 @@ func TestTeamClient_BySeasonID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoTeamClient)
-		client := statisticodata.NewTeamClient(m)
+		client := statisticofootballdata.NewTeamClient(m)
 
 		stream := new(MockTeamStream)
 

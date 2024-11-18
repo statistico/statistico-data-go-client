@@ -1,25 +1,22 @@
-package statisticodata
+package statisticofootballdata
 
 import (
 	"context"
 	"github.com/statistico/statistico-proto/go"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"io"
 )
 
 type TeamStatClient interface {
-	Stats(ctx context.Context, req *statistico.TeamStatRequest) ([]*statistico.TeamStat, error)
+	Stats(ctx context.Context, req *statistico.FixtureRequest) (*statistico.TeamStatsResponse, error)
 }
 
 type teamStatClient struct {
 	client statistico.TeamStatsServiceClient
 }
 
-func (t *teamStatClient) Stats(ctx context.Context, req *statistico.TeamStatRequest) ([]*statistico.TeamStat, error) {
-	stats := []*statistico.TeamStat{}
-
-	stream, err := t.client.GetStatForTeam(ctx, req)
+func (t *teamStatClient) Stats(ctx context.Context, req *statistico.FixtureRequest) (*statistico.TeamStatsResponse, error) {
+	res, err := t.client.GetTeamStatsForFixture(ctx, req)
 
 	if err != nil {
 		if e, ok := status.FromError(err); ok {
@@ -36,21 +33,10 @@ func (t *teamStatClient) Stats(ctx context.Context, req *statistico.TeamStatRequ
 		return nil, err
 	}
 
-	for {
-		st, err := stream.Recv()
-
-		if err == io.EOF {
-			return stats, nil
-		}
-
-		if err != nil {
-			return stats, ErrorExternalServer{err}
-		}
-
-		stats = append(stats, st)
-	}
+	return res, nil
 }
 
 func NewTeamStatClient(p statistico.TeamStatsServiceClient) TeamStatClient {
+
 	return &teamStatClient{client: p}
 }
