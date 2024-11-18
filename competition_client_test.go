@@ -1,4 +1,4 @@
-package statisticodata_test
+package statisticofootballdata_test
 
 import (
 	"context"
@@ -19,7 +19,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoCompetitionClient)
-		client := statisticodata.NewCompetitionClient(m)
+		client := statisticofootballdata.NewCompetitionClient(m)
 
 		stream := new(MockCompetitionStream)
 
@@ -50,7 +50,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoCompetitionClient)
-		client := statisticodata.NewCompetitionClient(m)
+		client := statisticofootballdata.NewCompetitionClient(m)
 
 		stream := new(MockCompetitionStream)
 
@@ -81,7 +81,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoCompetitionClient)
-		client := statisticodata.NewCompetitionClient(m)
+		client := statisticofootballdata.NewCompetitionClient(m)
 
 		stream := new(MockCompetitionStream)
 
@@ -112,7 +112,7 @@ func TestCompetitionClient_ByCountryID(t *testing.T) {
 		t.Helper()
 
 		m := new(MockProtoCompetitionClient)
-		client := statisticodata.NewCompetitionClient(m)
+		client := statisticofootballdata.NewCompetitionClient(m)
 
 		stream := new(MockCompetitionStream)
 

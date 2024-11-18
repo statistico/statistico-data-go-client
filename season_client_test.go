@@ -1,9 +1,8 @@
-package statisticodata_test
+package statisticofootballdata_test
 
 import (
 	"context"
 	"errors"
-	"github.com/golang/protobuf/ptypes/wrappers"
 	"github.com/statistico/statistico-football-data-go-grpc-client"
 	"github.com/statistico/statistico-proto/go"
 	"github.com/stretchr/testify/assert"
@@ -11,6 +10,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/wrapperspb"
 	"io"
 	"testing"
 )
@@ -20,13 +20,13 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 		t.Helper()
 
 		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
+		client := statisticofootballdata.NewSeasonClient(s)
 
 		stream := new(MockSeasonStream)
 
 		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
+			Sort:   &wrapperspb.StringValue{Value: "name_desc"},
 		}
 
 		response := statistico.TeamSeasonsResponse{Seasons: []*statistico.Season{
@@ -53,11 +53,11 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 		t.Helper()
 
 		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
+		client := statisticofootballdata.NewSeasonClient(s)
 
 		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
+			Sort:   &wrapperspb.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -80,11 +80,11 @@ func TestSeasonClient_ByTeamID(t *testing.T) {
 		t.Helper()
 
 		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
+		client := statisticofootballdata.NewSeasonClient(s)
 
 		request := statistico.TeamSeasonsRequest{
 			TeamId: 55,
-			Sort:   &wrappers.StringValue{Value: "name_desc"},
+			Sort:   &wrapperspb.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -109,13 +109,13 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 		t.Helper()
 
 		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
+		client := statisticofootballdata.NewSeasonClient(s)
 
 		stream := new(MockSeasonStream)
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:          &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrapperspb.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -139,13 +139,13 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 		t.Helper()
 
 		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
+		client := statisticofootballdata.NewSeasonClient(s)
 
 		stream := new(MockSeasonStream)
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:          &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrapperspb.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -169,13 +169,13 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 		t.Helper()
 
 		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
+		client := statisticofootballdata.NewSeasonClient(s)
 
 		stream := new(MockSeasonStream)
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:          &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrapperspb.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()
@@ -199,13 +199,13 @@ func TestSeasonClient_ByCompetitionID(t *testing.T) {
 		t.Helper()
 
 		s := new(MockProtoSeasonClient)
-		client := statisticodata.NewSeasonClient(s)
+		client := statisticofootballdata.NewSeasonClient(s)
 
 		stream := new(MockSeasonStream)
 
 		request := statistico.SeasonCompetitionRequest{
 			CompetitionId: 55,
-			Sort:          &wrappers.StringValue{Value: "name_desc"},
+			Sort:          &wrapperspb.StringValue{Value: "name_desc"},
 		}
 
 		ctx := context.Background()

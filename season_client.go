@@ -1,11 +1,11 @@
-package statisticodata
+package statisticofootballdata
 
 import (
 	"context"
-	"github.com/golang/protobuf/ptypes/wrappers"
-	"github.com/statistico/statistico-proto/go"
+	statistico "github.com/statistico/statistico-proto/go"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/wrapperspb"
 	"io"
 )
 
@@ -23,7 +23,7 @@ func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string)
 
 	req := statistico.TeamSeasonsRequest{
 		TeamId: teamId,
-		Sort:   &wrappers.StringValue{Value: sort},
+		Sort:   &wrapperspb.StringValue{Value: sort},
 	}
 
 	response, err := s.client.GetSeasonsForTeam(ctx, &req)
@@ -45,7 +45,7 @@ func (s *seasonClient) ByTeamID(ctx context.Context, teamId uint64, sort string)
 func (s *seasonClient) ByCompetitionID(ctx context.Context, competitionId uint64, sort string) ([]*statistico.Season, error) {
 	seasons := []*statistico.Season{}
 
-	req := statistico.SeasonCompetitionRequest{CompetitionId: competitionId, Sort: &wrappers.StringValue{Value: sort}}
+	req := statistico.SeasonCompetitionRequest{CompetitionId: competitionId, Sort: &wrapperspb.StringValue{Value: sort}}
 
 	stream, err := s.client.GetSeasonsForCompetition(ctx, &req)
 
