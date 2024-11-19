@@ -25,14 +25,13 @@ func TestTeamClient_ByID(t *testing.T) {
 		request := statistico.TeamRequest{TeamId: 1}
 
 		response := statistico.Team{
-			Id:             1,
-			Name:           "West Ham United",
-			ShortCode:      &wrapperspb.StringValue{Value: "WHU"},
-			CountryId:      8,
-			VenueId:        214,
-			IsNationalTeam: &wrapperspb.BoolValue{Value: false},
-			Founded:        &wrapperspb.UInt64Value{Value: 1895},
-			Logo:           &wrapperspb.StringValue{Value: "logo"},
+			Id:        1,
+			Name:      "West Ham United",
+			ShortCode: &wrapperspb.StringValue{Value: "WHU"},
+			CountryId: 8,
+			VenueId:   214,
+			Founded:   &wrapperspb.UInt64Value{Value: 1895},
+			Logo:      "logo",
 		}
 
 		ctx := context.Background()
@@ -50,9 +49,8 @@ func TestTeamClient_ByID(t *testing.T) {
 		assert.Equal(t, "WHU", team.GetShortCode().GetValue())
 		assert.Equal(t, uint64(8), team.GetCountryId())
 		assert.Equal(t, uint64(214), team.GetVenueId())
-		assert.Equal(t, false, team.GetIsNationalTeam().GetValue())
 		assert.Equal(t, uint64(1895), team.GetFounded().GetValue())
-		assert.Equal(t, "logo", team.GetLogo().GetValue())
+		assert.Equal(t, "logo", team.GetLogo())
 		m.AssertExpectations(t)
 	})
 
@@ -86,9 +84,8 @@ func TestTeamClient_ByID(t *testing.T) {
 		assert.Nil(t, team.GetShortCode())
 		assert.Equal(t, uint64(8), team.GetCountryId())
 		assert.Equal(t, uint64(214), team.GetVenueId())
-		assert.Equal(t, false, team.IsNationalTeam.GetValue())
 		assert.Nil(t, team.GetFounded())
-		assert.Nil(t, team.GetLogo())
+		assert.Equal(t, "", team.GetLogo())
 		m.AssertExpectations(t)
 	})
 
