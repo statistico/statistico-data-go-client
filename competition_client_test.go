@@ -146,7 +146,6 @@ func newProtoCompetition() *statistico.Competition {
 	return &statistico.Competition{
 		Id:        8,
 		Name:      "Premier League",
-		IsCup:     false,
 		CountryId: 462,
 	}
 }
