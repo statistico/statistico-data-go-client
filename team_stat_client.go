@@ -37,6 +37,5 @@ func (t *teamStatClient) Stats(ctx context.Context, req *statistico.FixtureReque
 }
 
 func NewTeamStatClient(p statistico.TeamStatsServiceClient) TeamStatClient {
-
 	return &teamStatClient{client: p}
 }
