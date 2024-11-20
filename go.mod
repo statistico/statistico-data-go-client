@@ -3,7 +3,7 @@ module github.com/statistico/statistico-football-data-go-grpc-client
 go 1.23.3
 
 require (
-	github.com/statistico/statistico-proto v0.2.3
+	github.com/statistico/statistico-proto v0.2.4
 	github.com/stretchr/testify v1.9.0
 	google.golang.org/grpc v1.68.0
 	google.golang.org/protobuf v1.35.2
