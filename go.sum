@@ -14,6 +14,8 @@ github.com/statistico/statistico-proto v0.2.2 h1:aSAcMmY7cNuaZV49TrpCuM5fNLhMniL
 github.com/statistico/statistico-proto v0.2.2/go.mod h1:5MGNKZNSaJOAdpCnuY2+ra9h4kV8YfPL5BgCLAs0Iik=
 github.com/statistico/statistico-proto v0.2.3 h1:0NhZu4KAe4zgoMRyNxOV8P1I35j6G2wSPQvcw3bYdvA=
 github.com/statistico/statistico-proto v0.2.3/go.mod h1:5MGNKZNSaJOAdpCnuY2+ra9h4kV8YfPL5BgCLAs0Iik=
+github.com/statistico/statistico-proto v0.2.4 h1:/PaH2CW9UOKPa8hMCTDFsWeDUPao4ShEfowmj8K44gk=
+github.com/statistico/statistico-proto v0.2.4/go.mod h1:5MGNKZNSaJOAdpCnuY2+ra9h4kV8YfPL5BgCLAs0Iik=
 github.com/stretchr/objx v0.5.2 h1:xuMeJ0Sdp5ZMRXx/aWO6RZxdr3beISkG5/G/aIRr3pY=
 github.com/stretchr/objx v0.5.2/go.mod h1:FRsXN1f5AsAjCGJKqEizvkpNtU+EGNCLh3NxZ/8L+MA=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
